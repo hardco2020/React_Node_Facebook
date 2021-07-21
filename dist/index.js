@@ -9,7 +9,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const app = express_1.default();
 dotenv_1.default.config({ path: path_1.default.resolve(__dirname, `./environments/${process.env.NODE_ENV}.env`) });
 app.get('/', (req, res, next) => {
-    res.send('Hello, World!!');
+    res.send('test!');
 });
 app.listen(process.env.PORT, () => console.log(`http server is running at port ${process.env.PORT}.`));
 //# sourceMappingURL=index.js.map
