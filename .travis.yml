@@ -11,3 +11,5 @@ deploy:
   api_key:
     secure: c905e2cc-8261-4fb4-ae98-ee82ad9776f0
   app: react-node-facebook
+  on:
+    all_branches: true
