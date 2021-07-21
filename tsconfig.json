@@ -5,7 +5,7 @@
     "module": "commonjs",              // 指定編譯成何種模組
     "declaration": true,               // 產生 '.d.ts' 檔
     "sourceMap": true,                 // 產生 '.map' 檔
-    "outDir": "./dist",                // 指定編譯後的檔案存放點
+    "outDir": "./build",                // 指定編譯後的檔案存放點
     "rootDir": "./src",                // 載入點的位置
     "removeComments": true,            // 移除註解
     "strict": true,                    // 採用嚴格模式
