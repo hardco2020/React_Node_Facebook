@@ -8,8 +8,7 @@ script:
 deploy:
   provider: heroku
   edge: true
-  api_key:
-    secure: c29393c2-1b87-4232-b688-b3a016b45f7d
+  api_key: c29393c2-1b87-4232-b688-b3a016b45f7d
   app: react-node-facebook
   on:
     all_branches: true
