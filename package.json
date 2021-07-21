@@ -27,7 +27,7 @@
     "passport-local": "^1.0.0"
   },
   "scripts": {
-    "start": "npm run build && NODE_ENV=production node ./dist/index.js",
+    "start": "npm run build && NODE_ENV=development ts-node ./dist/index.js",
     "start:dev": "nodemon --exec NODE_ENV=development ts-node ./src/index.ts",
     "build": "tsc"
   }
