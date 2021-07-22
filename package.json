@@ -27,8 +27,12 @@
     "passport-local": "^1.0.0"
   },
   "scripts": {
-    "start": "npm run build && NODE_ENV=development ts-node ./dist/index.js",
+    "start": "node ./build/index.js",
     "start:dev": "nodemon --exec NODE_ENV=development ts-node ./src/index.ts",
-    "build": "tsc"
+    "tsc": "./node_modules/typescript/bin/tsc",
+    "build": "tsc && cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "postinstall": "npm run build"
   }
 }

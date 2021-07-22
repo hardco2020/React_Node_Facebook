@@ -20,6 +20,7 @@ export class App {
 
   constructor() {
     //this.setMorgan();
+    this.setClient();
     this.setPassport();
     this.setEnvironment();
     this.setHelmet();
@@ -31,6 +32,7 @@ export class App {
   // @Public Methods
   // ====================================================================
 
+
   public bootstrap(): void {
     this.app.listen(process.env.PORT, () => console.log(`API Server is running at port ${ process.env.PORT }.`));
   }
@@ -38,6 +40,9 @@ export class App {
   // ====================================================================
   // @Private Methods
   // ====================================================================
+  private setClient():void{
+    this.app.use(express.static('client/src'))
+  }
   private setPassport(): void {
     passport.initialize();
   }
