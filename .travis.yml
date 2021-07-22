@@ -5,6 +5,8 @@ install:
     - npm install
 script:
     - npm run build
+env: 
+  CI: false
 deploy:
   provider: heroku
   edge: true
