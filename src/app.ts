@@ -75,9 +75,11 @@ export class App {
   private registerRoute(): void {;
     this.route = new AppRoute()
     this.app.use('/', this.route.router);
-  
+    //get index file and route
+    this.app.get("*",(req,res)=>{
+      res.sendFile(path.resolve(__dirname,"../client","build","index.html"));
+    });
     //this.app.use('/todos', this.todoroute.router);
     //this.app.use('/localauth',this.localauthroute.router);
   }
-
 }
