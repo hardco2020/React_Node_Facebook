@@ -42,6 +42,7 @@ export class App {
   // ====================================================================
   private setClient():void{
     this.app.use(express.static('./client/src'))
+    this.app.use(express.static(__dirname + '/public'));
   }
   private setPassport(): void {
     passport.initialize();
