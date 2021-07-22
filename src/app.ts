@@ -41,7 +41,7 @@ export class App {
   // @Private Methods
   // ====================================================================
   private setClient():void{
-    this.app.use(express.static('client/src'))
+    this.app.use(express.static('./client/src'))
   }
   private setPassport(): void {
     passport.initialize();
