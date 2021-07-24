@@ -76,15 +76,15 @@ export class LocalAuthRepository {
     //新增用user_name找到user的選項
     public async getUserbyUsername(user_name:string){
         const user:any = await LocalAuthModel.findOne({username:user_name})
-        // const {password,updatedAt,...other} = user._doc //將敏感資訊去除掉
-        // console.log(other)
-        return user;
+        const {password,updatedAt,...other} = user._doc //將敏感資訊去除掉
+        console.log(other)
+        return other;
     }
     public async getUserbyEmail(email:string){
         const user:any = await LocalAuthModel.findOne({email:email})
-        // const {password,updatedAt,...other} = user._doc //將敏感資訊去除掉
-        // console.log(other)
-        return user;
+        const {password,updatedAt,...other} = user._doc //將敏感資訊去除掉
+        console.log(other)
+        return other;
     }
     //follow user
     //要做確認
