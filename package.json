@@ -30,9 +30,7 @@
     "start": "node ./build/index.js",
     "start:dev": "nodemon --exec NODE_ENV=development ts-node ./src/index.ts",
     "tsc": "./node_modules/typescript/bin/tsc",
-    "build": "tsc && cd client && npm run build",
-    "install-client": "cd client && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build",
+    "build": "tsc",
     "postinstall": "npm run build"
   }
 }
