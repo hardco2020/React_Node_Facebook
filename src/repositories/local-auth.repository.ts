@@ -135,6 +135,7 @@ export class LocalAuthRepository {
     }
     public async searchUsers(key:string){
         const all = await LocalAuthModel.find({});
+        console.log(all)
         const results = all.filter(user => user.username.includes(key))
         console.log(results)
         return results
