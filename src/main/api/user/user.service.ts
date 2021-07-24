@@ -85,4 +85,8 @@ export class UserService {
         })
         return friendList
     }
+    public async searchUsers(key:string){
+        const users = this.localAuthRepo.searchUsers(key);
+        return  users
+    }
 }
