@@ -46,5 +46,10 @@ export class UserRoute extends RouteBase{
         .get(
             this.responseHandler(this.controller.getFriends)
         )
+// search users
+        this.router.route('/search/:key')
+        .get(
+            this.responseHandler(this.controller.searchUsers)
+        )
     }
 }

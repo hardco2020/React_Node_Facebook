@@ -53,5 +53,10 @@ export class UserController extends ControllerBase {
         const dto = await this.userSvc.getFriends(id)
         return this.formatResponse(dto,HttpStatus.OK)
     }
+    public async searchUsers(req:Request){
+        const key = req.params.key
+        const dto = await this.userSvc.searchUsers(key)
+        return this.formatResponse(dto,HttpStatus.OK)
+    }
 }
 
