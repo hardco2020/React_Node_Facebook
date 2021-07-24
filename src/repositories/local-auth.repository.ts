@@ -133,7 +133,12 @@ export class LocalAuthRepository {
         );
         return user;
     }
-
+    public async searchUsers(key:string){
+        const all = await LocalAuthModel.find({});
+        const results = all.filter(user => user.username.includes(key))
+        console.log(results)
+        return results
+    }
 
 
 
