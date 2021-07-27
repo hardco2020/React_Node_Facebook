@@ -81,16 +81,17 @@ export class PostRepository{
                 return PostModel.find({userId:friendId})
             })
         )
-        console.log(friendPosts.length)
-        let posts:any
+        
+        let allposts:any
+        let posts: any[] = []
+        posts = posts.concat(userPosts)
         if(friendPosts[0]===undefined){
-            //console.log(friendPosts[0])
-            posts = userPosts
+            console.log(friendPosts[0])
         }else{
-            for(let i=0;i<friendPosts.length; i++)
-            //console.log(friendPosts[0])
-            //console.log("不為空的")
-            posts = (userPosts as unknown[]).concat(friendPosts[i])
+            let i:number
+            for(i=0 ;i<friendPosts.length; i++)
+                posts = posts.concat(friendPosts[i])
+                console.log(posts)
         }
         return posts;
     }
