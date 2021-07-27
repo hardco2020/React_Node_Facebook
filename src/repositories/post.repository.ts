@@ -75,24 +75,22 @@ export class PostRepository{
         const currentUser:any = await LocalAuthModel.findById(user_id)
         console.log(currentUser)
         const userPosts = await PostModel.find({userId:user_id});
-        console.log(userPosts)
         const friendPosts = await Promise.all(
             currentUser.followings.map((friendId:any)=>{
+                console.log("朋友",friendId)
                 return PostModel.find({userId:friendId})
             })
         )
-        
-        console.log("使用者",userPosts)
-        console.log("朋友",friendPosts)
-        
+        console.log(friendPosts.length)
         let posts:any
         if(friendPosts[0]===undefined){
             //console.log(friendPosts[0])
             posts = userPosts
         }else{
+            for(let i=0;i<friendPosts.length; i++)
             //console.log(friendPosts[0])
             //console.log("不為空的")
-            posts = (userPosts as unknown[]).concat(friendPosts[0])
+            posts = (userPosts as unknown[]).concat(friendPosts[i])
         }
         return posts;
     }
