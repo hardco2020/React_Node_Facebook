@@ -74,26 +74,31 @@ export class PostRepository{
     public async timelinePost(user_id:string){
         const currentUser:any = await LocalAuthModel.findById(user_id)
         console.log(currentUser)
+        //兩個應該要合在一起找 這樣才能一次回傳十筆？
+
         const userPosts = await PostModel.find({userId:user_id});
-        const friendPosts = await Promise.all(
-            currentUser.followings.map((friendId:any)=>{
-                console.log("朋友",friendId)
-                return PostModel.find({userId:friendId})
-            })
-        )
-        
+        //利用解構寫法 一次回傳十筆？
+        const friendPosts = await PostModel.find({userId:{$in: [user_id,...currentUser.followings]}}).sort([['createdAt', -1]]).limit(15)
+        // const friendPosts = await Promise.all(
+        //     currentUser.followings.map((friendId:any)=>{
+        //         console.log("朋友",friendId)
+        //         return PostModel.find({userId:{$in: [user_id,friendId]}}).sort('-date')
+        //     })
+        // )
+        // console.log(friendPosts)
         let allposts:any
         let posts: any[] = []
-        posts = posts.concat(userPosts)
-        if(friendPosts[0]===undefined){
-            console.log(friendPosts[0])
-        }else{
-            let i:number
-            for(i=0 ;i<friendPosts.length; i++)
-                posts = posts.concat(friendPosts[i])
-                console.log(posts)
-        }
-        return posts;
+        // posts = posts.concat(userPosts)
+        // if(friendPosts[0]===undefined){
+        //     console.log(friendPosts[0])
+        // }else{
+        //     let i:number
+        //     for(i=0 ;i<friendPosts.length; i++)
+        //         posts = posts.concat(friendPosts[i])
+        //         console.log(posts)
+        // }
+        //根據query回傳前十筆？
+        return friendPosts;
     }
     public async getUserbyUsername(user_name:string){
         console.log(user_name)
