@@ -89,4 +89,8 @@ export class UserService {
         const users = this.localAuthRepo.searchUsers(key);
         return  users
     }
+    public async recommendUsers(user_id:string){
+        const users = this.localAuthRepo.recommendUsers(user_id);
+        return users
+    }
 }

@@ -51,5 +51,10 @@ export class UserRoute extends RouteBase{
         .get(
             this.responseHandler(this.controller.searchUsers)
         )
+// get recommended ten users
+        this.router.route('/recommend')
+        .get(
+            this.responseHandler(this.controller.recommendUsers)
+        )
     }
 }

@@ -140,7 +140,14 @@ export class LocalAuthRepository {
         console.log(results)
         return results
     }
-
+    public async recommendUsers(id:string){
+        const currentUser:any = await LocalAuthModel.findById(id)
+        //console.log(currentUser)
+        //尋找最近註冊十筆並且不是使用者好友的人
+        const users = await LocalAuthModel.find({'_id':{ "$nin": [id,...currentUser.followings] } }).sort([['createdAt', -1]]).limit(10)
+        //console.log("使用者",users)
+        return users
+    }
 
 
 }

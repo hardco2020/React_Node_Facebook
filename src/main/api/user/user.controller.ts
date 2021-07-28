@@ -58,5 +58,10 @@ export class UserController extends ControllerBase {
         const dto = await this.userSvc.searchUsers(key)
         return this.formatResponse(dto,HttpStatus.OK)
     }
+    public async recommendUsers(req:Request){
+        const payload = new JWTPayloadDTO((req as any).payload); //驗證token
+        const dto = await this.userSvc.recommendUsers(payload._id)
+        return this.formatResponse(dto,HttpStatus.OK)
+    }
 }
 
