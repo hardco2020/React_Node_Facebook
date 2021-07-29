@@ -53,8 +53,8 @@ export class PostService {
         const post = await this.postRepo.getPost(id);
         return post;
     }
-    public async timelinePost(user_id:string){
-        const posts = await this.postRepo.timelinePost(user_id);
+    public async timelinePost(user_id:string,page:number){
+        const posts = await this.postRepo.timelinePost(user_id,page);
         return posts;
     }
     public async getUserbyUsername(user_name:string){

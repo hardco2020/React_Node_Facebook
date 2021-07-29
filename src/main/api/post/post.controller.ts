@@ -50,8 +50,10 @@ export class PostController extends ControllerBase {
     
     public async timelinePost(req:Request):Promise<ResponseObject<PostDocument[]>>{
         const payload = new JWTPayloadDTO((req as any).payload); //驗證token
+        const page = parseInt(req.params.page)
+        console.log(page)
         console.log(payload._id)
-        const dto = await this.postSvc.timelinePost(payload._id)
+        const dto = await this.postSvc.timelinePost(payload._id,page)
         return this.formatResponse(dto,HttpStatus.OK);
     }
     public async getAllPost(req:Request):Promise<ResponseObject<PostDocument[]>>{

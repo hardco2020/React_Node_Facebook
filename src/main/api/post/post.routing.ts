@@ -54,7 +54,7 @@ export class PostRoute extends RouteBase{
             this.responseHandler(this.controller.likePost)
         )
         //get timeline posts
-        this.router.route('/timeline/all')
+        this.router.route('/timeline/all/:page')
         .get(
             this.responseHandler(this.controller.timelinePost)
         )
