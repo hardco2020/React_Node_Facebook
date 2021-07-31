@@ -58,9 +58,11 @@ export class PostController extends ControllerBase {
     }
     public async getAllPost(req:Request):Promise<ResponseObject<PostDocument[]>>{
         const user_name = req.params.username
+        const page = parseInt(req.params.page)
         console.log(user_name)
+        console.log(page)
         const user:any = await this.postSvc.getUserbyUsername(user_name)
-        const dto = await this.postSvc.getAllPost(user._id)
+        const dto = await this.postSvc.getAllPost(user._id,page)
         return this.formatResponse(dto,HttpStatus.OK);
     }   
 }

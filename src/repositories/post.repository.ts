@@ -87,8 +87,8 @@ export class PostRepository{
         console.log(user)
         return user;
     }   
-    public async getAllPost(user_id:string){
-        const posts = await PostModel.find({userId:user_id})
+    public async getAllPost(user_id:string,page:number){
+        const posts = await PostModel.find({userId:user_id}).sort([['createdAt', -1]]).limit(15).skip(page*15)
         return posts;
     }
 }

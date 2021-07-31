@@ -61,8 +61,8 @@ export class PostService {
         const user = await this.postRepo.getUserbyUsername(user_name);
         return user
     }
-    public async getAllPost(user_id:string){
-        const posts = await this.postRepo.getAllPost(user_id);
+    public async getAllPost(user_id:string,page:number){
+        const posts = await this.postRepo.getAllPost(user_id,page);
         return posts      
     }
 }

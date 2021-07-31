@@ -59,7 +59,7 @@ export class PostRoute extends RouteBase{
             this.responseHandler(this.controller.timelinePost)
         )
         //get user's all posts
-        this.router.route('/profile/:username')
+        this.router.route('/profile/:username/:page')
         .get(
             this.responseHandler(this.controller.getAllPost)
         )
