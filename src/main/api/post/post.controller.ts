@@ -65,4 +65,10 @@ export class PostController extends ControllerBase {
         const dto = await this.postSvc.getAllPost(user._id,page)
         return this.formatResponse(dto,HttpStatus.OK);
     }   
+    public async sendComment(req:Request){
+        const { postId } = req.params
+        const {userName,userPic,comment,date} = req.body
+        const dto =await this.postSvc.commentPost(userName,userPic,comment,date,postId)
+        return this.formatResponse(dto, HttpStatus.OK);
+    }
 }

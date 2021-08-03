@@ -91,4 +91,22 @@ export class PostRepository{
         const posts = await PostModel.find({userId:user_id}).sort([['createdAt', -1]]).limit(15).skip(page*15)
         return posts;
     }
+    public async commentPost(user_name:string,user_pic:string,comment:string,date:Date,postId:string){
+        const Comment = { 
+                userName: user_name,
+                userPic:user_pic,
+                comment:comment,
+                date:date
+        }
+        const post = await PostModel.findOneAndUpdate(
+            {_id:postId},
+            {$push:{comment:Comment}},
+            {
+                new: true,
+                runValidators: true,
+                useFindAndModify: false
+            }
+        );
+        return post;
+    }
 }

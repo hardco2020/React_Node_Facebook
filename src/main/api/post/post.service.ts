@@ -65,4 +65,8 @@ export class PostService {
         const posts = await this.postRepo.getAllPost(user_id,page);
         return posts      
     }
+    public async commentPost(user_name:string,user_pic:string,comment:string,date:Date,postId:string){
+        const post = await this.postRepo.commentPost(user_name,user_pic,comment,date,postId)
+        return post
+    }
 }

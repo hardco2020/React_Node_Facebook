@@ -63,6 +63,12 @@ export class PostRoute extends RouteBase{
         .get(
             this.responseHandler(this.controller.getAllPost)
         )
+        //send Comments
+        this.router.route('/comment/:postId')
+        .post(
+            express.json(),
+            this.responseHandler(this.controller.sendComment)
+        )
     }
 
 

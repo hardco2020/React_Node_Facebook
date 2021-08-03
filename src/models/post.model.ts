@@ -18,6 +18,10 @@ const PostSchema = new  Schema(
         likes:{
             type:Array,
             default:[]
+        },
+        comment:{
+            type:Array,
+            default:[]
         }
     },
     {timestamps:true}
@@ -29,6 +33,7 @@ export interface PostDocument extends CoreDocument {
     desc:string;
     img:string;
     likes:any[];
+    comment:any[];
 };
 
 export const PostModel = model<PostDocument>('Post', PostSchema); //輸出model
