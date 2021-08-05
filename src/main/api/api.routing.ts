@@ -2,12 +2,16 @@ import { RouteBase } from '../../bases/route.base';
 import { TodoRoute } from './todo/todo.routing';
 import { UserRoute } from './user/user.routing';
 import { PostRoute } from './post/post.routing';
+import { ConversationRoute } from './conversation/conversation.routing';
+import { MessageRoute } from './message/message.routing'
 import JWT from 'express-jwt';
 export class ApiRoute extends RouteBase {
 
   private todoRoute = new TodoRoute();
   private userRoute = new UserRoute();
   private postRoute = new PostRoute();
+  private conversationRoute = new ConversationRoute();
+  private messageRoute = new MessageRoute();
   constructor() {
     super();
     //this.first();
@@ -16,6 +20,8 @@ export class ApiRoute extends RouteBase {
     this.todoRoute = new TodoRoute();
     this.userRoute = new UserRoute(); //初始化
     this.postRoute = new PostRoute();
+    this.conversationRoute = new ConversationRoute();
+    this.messageRoute = new MessageRoute();
     super.initial();
   }
   protected registerRoute(): void {
@@ -33,6 +39,8 @@ export class ApiRoute extends RouteBase {
     this.router.use('/todos', this.todoRoute.router);
     this.router.use('/users',this.userRoute.router);
     this.router.use('/posts',this.postRoute.router);
+    this.router.use('/messages',this.messageRoute.router);
+    this.router.use('/conversations',this.conversationRoute.router);
     //此處要新增user的route
   }
 

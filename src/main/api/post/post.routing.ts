@@ -1,6 +1,5 @@
 import { RouteBase } from '../../../bases/route.base';
 import { PostController } from './post.controller';
-import multer from 'multer';
 import express from 'express'
 
 export class PostRoute extends RouteBase{
@@ -14,21 +13,6 @@ export class PostRoute extends RouteBase{
     }
     protected registerRoute(): void {    
         this.router.get('/test', (req, res, next) => res.send('user test.'));
-        //create post
-        // const storage =  multer.diskStorage({
-        //     destination:(req,file,cb)=>{
-        //       cb(null,"public/images");
-        //     },
-        //     filename:(req,file,cb)=>{
-        //       cb(null,file.originalname);
-        //     }
-        //   })
-        // const upload = multer({storage});
-        // this.router.route('/upload')
-        // .post(
-        //     upload.single('file')
-        //     this.responseHandler()
-        // )
         this.router.route('/')
         .post(
             express.json(), 
