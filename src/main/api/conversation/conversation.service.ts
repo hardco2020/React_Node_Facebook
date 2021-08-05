@@ -14,6 +14,10 @@ export class ConversationService {
         const getConversation = await this.cvsRepo.getConversation(userId)
         return getConversation
     }
+    public async getConversationByTwoId(firstId:string,secondId:string){
+        const getConversationByTwoId = await this.cvsRepo.getConversationByTwoId(firstId,secondId)
+        return getConversationByTwoId;
+    }
     // public async createPost(id:string,body:any){
     //     const post = await this.postRepo.createPost(id,body);
     //     return post;

@@ -19,6 +19,11 @@ export class ConversationController extends ControllerBase {
         const dto = await this.conversationSvc.getConversation(userId)
         return this.formatResponse(dto,HttpStatus.OK)
     }
+    public async getConversationByTwoId(req:Request):Promise<ResponseObject<ConversationDocument>>{
+        const { firstUserId,secondUserId} = req.params
+        const dto = await this.conversationSvc.getConversationByTwoId(firstUserId,secondUserId)
+        return this.formatResponse(dto,HttpStatus.OK)
+    }
     
 
 }

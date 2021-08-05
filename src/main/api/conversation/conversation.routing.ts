@@ -24,6 +24,11 @@ export class ConversationRoute extends RouteBase{
         .get(
             this.responseHandler(this.controller.getConversation)
         )
+        //get conversation by two userId
+        this.router.route('/find/:firstUserId/:secondUserId')
+        .get(
+            this.responseHandler(this.controller.getConversationByTwoId)
+        )
     }
 
 

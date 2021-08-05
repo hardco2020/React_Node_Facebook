@@ -16,6 +16,12 @@ export class ConversationRepository{
         })
         return conversation
     }
+    public async getConversationByTwoId(firstId:string,secondId:string):Promise<ConversationDocument|null>{
+        const conversation = await ConversationModel.findOne({
+            members: { $all:[firstId,secondId]}
+        })
+        return conversation
+    }
     // public async getPost(id:string):Promise<PostDocument>{
     //     const post:any = await PostModel.findById(id);
     //     return post;
