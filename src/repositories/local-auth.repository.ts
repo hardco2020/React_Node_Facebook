@@ -25,6 +25,7 @@ export class LocalAuthRepository {
             password:{salt,hash},
             email
         });
+        console.log("123")
         const document = await user.save();
         return document;
     }
@@ -76,15 +77,26 @@ export class LocalAuthRepository {
     //新增用user_name找到user的選項
     public async getUserbyUsername(user_name:string){
         const user:any = await LocalAuthModel.findOne({username:user_name})
-        const {password,updatedAt,...other} = user._doc //將敏感資訊去除掉
-        console.log(other)
-        return other;
+        if(!user){
+            console.log("找不到使用者")
+            return user;
+        }else{
+            const {password,updatedAt,...other} = user._doc //將敏感資訊去除掉
+            console.log(other)
+            return other;
+        }
+        //因為這邊用到user的doc導致註冊再做確認時找不到資訊會直接throw error
     }
     public async getUserbyEmail(email:string){
         const user:any = await LocalAuthModel.findOne({email:email})
-        const {password,updatedAt,...other} = user._doc //將敏感資訊去除掉
-        console.log(other)
-        return other;
+        if(!user){
+            console.log("找不到使用者")
+            return user;
+        }else{
+            const {password,updatedAt,...other} = user._doc //將敏感資訊去除掉
+            console.log(other)
+            return other;
+        }
     }
     //follow user
     //要做確認

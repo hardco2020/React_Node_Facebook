@@ -10,7 +10,6 @@ export class LocalAuthController extends ControllerBase {
     protected readonly localAuthSvc = new LocalAuthService();
 
     public async signup(req:Request):Promise<ResponseObject<string>>{
-        console.log("身體",req.body)
         const {username,password,email} = req.body;
         const user = await this.localAuthSvc.addUser(username,password,email);
         const token = this.localAuthSvc.generateJWT(user);

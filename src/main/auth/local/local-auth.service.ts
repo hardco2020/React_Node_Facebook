@@ -79,7 +79,7 @@ export class LocalAuthService {
       }//可以看到傳入參數為 args，主要是把 Request、Response 與 NextFunction 帶入 authenticate 中。
     public async addUser(username:string,password:string,email:string){
         //需要確認是否有使用過
-        const isUsedEmail = await this.localAuthRepo.getUserbyUsername(email)
+        const isUsedEmail = await this.localAuthRepo.getUserbyEmail(email)
         const isUsedName = await this.localAuthRepo.getUserbyUsername(username)
         if(isUsedEmail || isUsedName){
             const error = new Error('使用者名稱或電子信箱已被使用');
