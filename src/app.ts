@@ -10,8 +10,9 @@ import { AppRoute } from './app.routing';
 import { ErrorRequestHandler } from 'express';
 import { Database } from './database';
 import passport from 'passport';
+import { createServer } from 'http';
+import { Server,Socket } from 'socket.io'
 import JWTGuard from 'express-jwt';
-import multer from 'multer'
 import { HttpStatus } from './types/response.type'
 
 export class App {
@@ -34,7 +35,14 @@ export class App {
 
 
   public bootstrap(): void {
-    this.app.listen(process.env.PORT, () => console.log(`API Server is running at port ${ process.env.PORT }.`));
+    console.log("cool")
+    const httpServer = createServer(this.app);
+    
+    this.setSocket(httpServer)
+    httpServer.listen( process.env.PORT,()=>{
+      console.log("Server is listening on port %d",process.env.PORT)
+    });
+    //this.app.listen(process.env.PORT, () => console.log(`API Server is running at port ${ process.env.PORT }.`));
   }
 
   // ====================================================================
@@ -54,7 +62,51 @@ export class App {
     this.app.use(helmet());
   }
   
+  private setSocket(httpServer:any):void{
+    const io = new Server(httpServer, {
+      cors:{
+        origin:"http://localhost:3000"
+      },
+    });
+    let users:any[] = [];
+    const addUser = (userId:string,socketId:string)=>{
+        //some = 判定是否至少有一個在陣列裡面
+        !users.some(user=>user.userId===userId) &&
+            users.push({userId,socketId});
+    }
 
+    const removeUser = (socketId:string)=>{
+        users = users.filter(user=>user.socketId !== socketId)
+    }
+
+    const getUser = (userId:string)=>{
+        return users.find(user=>user.userId === userId)
+    }
+    io.on("connection",(socket)=>{
+        //when connect
+        console.log("a user connected")
+        //take userId and socketId from user
+        socket.on("addUser",userId=>{
+            addUser(userId,socket.id);
+            //把有連接的人的Id都丟給所有user這樣才知道誰有上限
+            io.emit("getUsers",users)
+        })
+        //send and get message
+        socket.on("sendMessage",({ senderId,receiverId,text})=>{
+            const user = getUser(receiverId);
+            io.to(user.socketId).emit("getMessage",{
+              senderId,
+              text, 
+            });
+        })
+        //when disconnect
+        socket.on("disconnect",()=>{
+            console.log("a user disconnected")
+            removeUser(socket.id);
+            io.emit("getUsers",users)
+        })
+    })
+  }
   private setCors(): void {
     this.app.use(cors());
   }
