@@ -2,11 +2,12 @@ import { RouteBase } from '../../bases/route.base';
 import { TodoRoute } from './todo/todo.routing';
 import { UserRoute } from './user/user.routing';
 import { PostRoute } from './post/post.routing';
+import { NoticeRoute } from './notice/notice.routing';
 import { ConversationRoute } from './conversation/conversation.routing';
 import { MessageRoute } from './message/message.routing'
 import JWT from 'express-jwt';
 export class ApiRoute extends RouteBase {
-
+  private noticeRoute = new NoticeRoute();
   private todoRoute = new TodoRoute();
   private userRoute = new UserRoute();
   private postRoute = new PostRoute();
@@ -17,6 +18,7 @@ export class ApiRoute extends RouteBase {
     //this.first();
   }
   protected initial():void{
+    this.noticeRoute = new NoticeRoute();
     this.todoRoute = new TodoRoute();
     this.userRoute = new UserRoute(); //初始化
     this.postRoute = new PostRoute();
@@ -36,6 +38,7 @@ export class ApiRoute extends RouteBase {
           }
         )
     );
+    this.router.use('/notice',this.noticeRoute.router);
     this.router.use('/todos', this.todoRoute.router);
     this.router.use('/users',this.userRoute.router);
     this.router.use('/posts',this.postRoute.router);
