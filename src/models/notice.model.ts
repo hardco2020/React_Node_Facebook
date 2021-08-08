@@ -19,6 +19,10 @@ const NoticeSchema = new  Schema(
         senderPic:{
             type:String,
             require
+        },
+        senderUsername:{
+            type:String,
+            require
         }
     },
     { timestamps: true}
@@ -27,7 +31,9 @@ const NoticeSchema = new  Schema(
 export interface NoticeDocument extends CoreDocument{
     object:string,
     read: Boolean,
-    senderId:string
+    senderId:string,
+    senderPic:string,
+    senderUsername:string
 }
 
 export const NoticeModel  = model<NoticeDocument>('Notice',NoticeSchema);
