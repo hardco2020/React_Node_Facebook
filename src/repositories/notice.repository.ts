@@ -44,4 +44,17 @@ export class NoticeRepository{
         )
         return notice
     }
+    public async sendNoticePost(senderId:string,object:string,senderPic:string,senderUsername:string,receiverId:string,postId:string):Promise<NoticeDocument>{
+        const newNotice = new NoticeModel({
+            object: object,
+            read: [],
+            senderId : senderId,
+            senderPic : senderPic,
+            senderUsername,
+            receiverId,
+            postId
+        })
+        const saveNotice = await newNotice.save();
+        return saveNotice;
+    }
 }

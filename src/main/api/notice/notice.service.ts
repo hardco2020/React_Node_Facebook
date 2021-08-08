@@ -17,6 +17,9 @@ export class NoticeService {
         const notice = await this.ntRepo.updateNotice(noticeId,readId)
         return notice
     }
+    public async sendNoticePost(senderId:string, object:string,senderPic:string,senderUsername:string,receiverId:string,postId:string){
+        const newNotice = await this.ntRepo.sendNoticePost(senderId,object,senderPic,senderUsername,receiverId,postId)
+        return newNotice;
+    }
 }
-
    

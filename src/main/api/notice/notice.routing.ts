@@ -24,6 +24,12 @@ export class NoticeRoute extends RouteBase{
         .get(
             this.responseHandler(this.controller.getNotice)
         )
+        //send Notice type comment and like 
+        this.router.route('/post')
+        .post(
+            express.json(),
+            this.responseHandler(this.controller.sendNoticePost)
+        )
         this.router.route('/update/:noticeId')
         .put(
             this.responseHandler(this.controller.updateNotice)

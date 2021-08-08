@@ -27,6 +27,12 @@ export class NoticeController extends ControllerBase {
         const dto = await this.NoticeSvc.updateNotice(noticeId,payload._id)
         return this.formatResponse(dto,HttpStatus.OK)
     }
+    public async sendNoticePost(req:Request):Promise<ResponseObject<NoticeDocument>>{
+        const { object,senderId,senderPic,senderUsername,receiverId,postId } = req.body
+        const dto = await this.NoticeSvc.sendNoticePost(senderId,object,senderPic,senderUsername,receiverId,postId)
+        return this.formatResponse(dto,HttpStatus.CREATED)
+
+    }
     // public async getConversation(req:Request):Promise<ResponseObject<ConversationDocument>>{
     //     const { userId } = req.params
     //     const dto = await this.conversationSvc.getConversation(userId)

@@ -26,6 +26,9 @@ const NoticeSchema = new  Schema(
         },
         receiverId:{
             type:Array,
+        },
+        postId:{
+            type:String,
         }
     },
     { timestamps: true}
@@ -37,7 +40,8 @@ export interface NoticeDocument extends CoreDocument{
     senderId:string,
     senderPic:string,
     senderUsername:string
-    receiverId:string
+    receiverId:string,
+    postId:string
 }
 
 export const NoticeModel  = model<NoticeDocument>('Notice',NoticeSchema);
