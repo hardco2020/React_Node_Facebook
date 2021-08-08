@@ -39,15 +39,20 @@ export class UserRoute extends RouteBase{
         .put(
             this.responseHandler(this.controller.unfriendUser)
         )
-// follow a user
-        this.router.route('/:id/follow')
-        .put(
-            this.responseHandler(this.controller.followUser)
+// Request pending 
+        this.router.route('/pending/:receiverId')
+        .post(
+            this.responseHandler(this.controller.createPending)
         )
-// unfollow a user 
-        this.router.route('/:id/unfollow')
+// Update pending
+        this.router.route('/updatePending/:senderId')
         .put(
-            this.responseHandler(this.controller.unfollowUser)
+            this.responseHandler(this.controller.updatePending)
+        )
+// Get pending
+        this.router.route('/pending/:receiverId')
+        .get(
+            this.responseHandler(this.controller.getPending)
         )
 // get friends 
         this. router.route('/friends/:id')

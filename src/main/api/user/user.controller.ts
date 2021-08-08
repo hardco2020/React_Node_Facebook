@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 import { JWTPayloadDTO } from '../../../dtos/jwt-payload.dto';
 import { HttpStatus } from '../../../types/response.type';
 import { LocalAuthDocument } from '../../../models/local-auth.model';
-
+import { PendingDocument} from '../../../models/pending.model'
 export class UserController extends ControllerBase {
     //只有管理者或者user才能使用token
 
@@ -30,24 +30,6 @@ export class UserController extends ControllerBase {
         //const dto = await this.userSvc.getUserbyId(id);
         return this.formatResponse(dto,HttpStatus.OK);
     }
-    public async followUser(req:Request):Promise<ResponseObject<string>>{
-        //使用者本身id放在token內
-        const payload = new JWTPayloadDTO((req as any).payload); //驗證token
-        //要追隨的人的id放在params
-        const {id} = req.params
-        console.log(id)
-        const dto = await this.userSvc.followUser(payload,id);
-        return this.formatResponse(dto,HttpStatus.OK);
-    }
-    public async unfollowUser(req:Request):Promise<ResponseObject<string>>{
-        //使用者本身id放在token內
-        const payload = new JWTPayloadDTO((req as any).payload); //驗證token
-        //要追隨的人的id放在params
-        const {id} = req.params
-        console.log(id)
-        const dto = await this.userSvc.unfollowUser(payload,id);
-        return this.formatResponse(dto,HttpStatus.OK);
-    }
     public async friendUser(req:Request):Promise<ResponseObject<string>>{
         const payload = new JWTPayloadDTO((req as any).payload); //驗證token
         const {id} = req.params
@@ -58,6 +40,24 @@ export class UserController extends ControllerBase {
         const payload = new JWTPayloadDTO((req as any).payload); //驗證token
         const {id} = req.params
         const dto = await this.userSvc.unfriendUser(payload._id,id);
+        return this.formatResponse(dto,HttpStatus.OK);
+    }
+    public async createPending(req:Request):Promise<ResponseObject<PendingDocument>>{
+        const payload = new JWTPayloadDTO((req as any).payload); //驗證token
+        const { receiverId } = req.params
+        const dto = await this.userSvc.createPending(payload._id,receiverId);
+        return this.formatResponse(dto,HttpStatus.OK);
+    }
+    public async updatePending(req:Request):Promise<ResponseObject<PendingDocument>>{
+        const payload = new JWTPayloadDTO((req as any).payload); //驗證token
+        const { senderId } = req.params
+        const dto = await this.userSvc.updatePending(payload._id,senderId);
+        return this.formatResponse(dto,HttpStatus.OK);
+    }
+    public async getPending(req:Request):Promise<ResponseObject<PendingDocument>>{
+        const payload = new JWTPayloadDTO((req as any).payload); //驗證token
+        const { receiverId } = req.params
+        const dto = await this.userSvc.getPending(payload._id,receiverId);
         return this.formatResponse(dto,HttpStatus.OK);
     }
     public async getFriends(req:Request){ 

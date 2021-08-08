@@ -21,74 +21,36 @@ export class UserService {
         const user = await this.localAuthRepo.getUserbyUsername(user_name)
         return user;
     }
-    public async followUser(payload: JWTPayloadDTO,id:string){
-        //在此處處理驗證的邏輯
-        //自己不能追蹤自己
-        //追蹤的人不能已經被追蹤過
-        let user=""
-        const isFollow = await this.localAuthRepo.getUserbyId(payload._id);
-        console.log(isFollow)
-        if(isFollow.followings.includes(id)){
-            const error = new Error('您已經追蹤過此人！');
-            (error as any).status = HttpStatus.CONFLICT;
-            console.log(error) //看看裡面的屬性
-            throw error;
-        }
-        else if(payload._id==id){
-            const error = new Error('自己不能追蹤自己！');
-            (error as any).status = HttpStatus.CONFLICT;
-            console.log(error) //看看裡面的屬性
-            throw error;
-        }else{
-            //做update
-            await this.localAuthRepo.followUser(payload._id,id);
-            user = "您已經成功追蹤"+id
-        }
-        return user;
+    public async createPending(senderId:string,receiverId:string){
+        const pending = await this.localAuthRepo.createPending(senderId,receiverId)
+        return pending;
     }
-    public async unfollowUser(payload: JWTPayloadDTO,id:string){
-        //在此處處理驗證的邏輯
-        //自己不能追蹤自己
-        //追蹤的人不能已經被追蹤過
-        let user=""
-        const isFollow = await this.localAuthRepo.getUserbyId(payload._id);
-        console.log(isFollow)
-        if(!isFollow.followings.includes(id)){ //代表找不到此人
-            const error = new Error('您已經和此人是朋友');
-            (error as any).status = HttpStatus.CONFLICT;
-            console.log(error) //看看裡面的屬性
-            throw error;
-        }
-        else if(payload._id==id){
-            const error = new Error('自己不能取消追蹤自己！');
-            (error as any).status = HttpStatus.CONFLICT;
-            console.log(error) //看看裡面的屬性
-            throw error;
-        }else{
-            //做update
-            await this.localAuthRepo.unfollowUser(payload._id,id);
-            user = "您已經成功取消追蹤"+id
-        }
-        return user;
+    public async updatePending(senderId:string,receiverId:string){
+        const pending = await this.localAuthRepo.updatePending(senderId,receiverId)
+        return pending;
+    }
+    public async getPending(senderId:string,receiverId:string){
+        const pending = await this.localAuthRepo.getPending(senderId,receiverId)
+        return pending;
     }
     public async friendUser(id:string,friendId:string){
         let user=""
         const isFriend = await this.localAuthRepo.getUserbyId(id);
         console.log(isFriend)
         if(isFriend.friends.includes(friendId)){ //代表找不到此人
-            const error = new Error('您已經和此人是朋友！');
+            const error = new Error('您和此人已經是朋友了！');
             (error as any).status = HttpStatus.CONFLICT;
             console.log(error) //看看裡面的屬性
             throw error;
         }
         else if(id===friendId){
-            const error = new Error('自己不能和自己成為朋友！');
+            const error = new Error('自己不能和自己當朋友！');
             (error as any).status = HttpStatus.CONFLICT;
             console.log(error) //看看裡面的屬性
             throw error;
         }else{
             //做update
-            await this.localAuthRepo.friendUser(id,friendId);
+            await this.localAuthRepo.unfriendUser(id,friendId);
             user = "您已經成功和"+id+"成為朋友"
         }
         return user;

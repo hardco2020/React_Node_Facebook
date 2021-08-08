@@ -1,7 +1,7 @@
 import { timeStamp } from 'console';
 import crypto from 'crypto'; //加密方法
 import {LocalAuthDocument,LocalAuthModel} from '../models/local-auth.model'
-
+import { PendingnModel,PendingDocument } from '../models/pending.model';
 export class LocalAuthRepository {
     //hash實作方法
     public hashPassword(
@@ -144,48 +144,35 @@ export class LocalAuthRepository {
         );
         return user;
     }
-    public async followUser(userId:string,followId:string){
-        const user = await LocalAuthModel.findOneAndUpdate(
-            { _id: userId},
-            { $push:{followings:followId} },
-            {
-              new: true,
-              runValidators: true,
-              useFindAndModify: false
-            }
-        );
-        const followUser = await LocalAuthModel.findOneAndUpdate(
-            { _id: followId},
-            { $push:{followers:userId} },
-            {
-              new: true,
-              runValidators: true,
-              useFindAndModify: false
-            }
-        );
-        return user;
+    public async createPending(senderId:string,receiverId:string){
+        console.log(senderId,receiverId)
+        const newPending = new PendingnModel({
+            senderId:senderId,
+            receiverId:receiverId,
+            senderPending:true,
+            receiverPending:false
+        }) 
+        const savedPending = await newPending.save();
+        return savedPending
     }
-    
-    public async unfollowUser(userId:string,followId:string){
-        const user = await LocalAuthModel.findOneAndUpdate(
-            { _id: userId},
-            { $pull:{followings:followId} },
-            {
-              new: true,
-              runValidators: true,
-              useFindAndModify: false
-            }
+    public async updatePending(senderId:string,receiverId:string){
+        // 此處的sender是欄位裡的receiver
+        const pending = await PendingnModel.findOneAndUpdate(
+          { senderId: receiverId,receiverId:senderId},
+          { receiverPending:true},
+          {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+          }
         );
-        const followUser = await LocalAuthModel.findOneAndUpdate(
-            { _id: followId},
-            { $pull:{followers:userId} },
-            {
-              new: true,
-              runValidators: true,
-              useFindAndModify: false
-            }
+        return pending
+    }
+    public async getPending(senderId:string,receiverId:string){
+        const pending = await PendingnModel.findOne(
+            {senderId:senderId,receiverId:receiverId}
         );
-        return user;
+        return pending
     }
     public async searchUsers(key:string){
         const all = await LocalAuthModel.find({});
