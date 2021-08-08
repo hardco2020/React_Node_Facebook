@@ -11,14 +11,20 @@ export class NoticeController extends ControllerBase {
     private readonly NoticeSvc = new NoticeService();
     
     public async sendNotice(req:Request):Promise<ResponseObject<NoticeDocument>>{
-        const { object,senderId,senderPic,senderUsername } = req.body
-        const dto = await this.NoticeSvc.sendNotice(senderId,object,senderPic,senderUsername)
+        const { object,senderId,senderPic,senderUsername,receiverId } = req.body
+        const dto = await this.NoticeSvc.sendNotice(senderId,object,senderPic,senderUsername,receiverId)
         return this.formatResponse(dto,HttpStatus.CREATED)
 
     }
     public async getNotice(req:Request):Promise<ResponseObject<NoticeDocument[]>>{
         const { id } = req.params
         const dto = await this.NoticeSvc.getNotice(id)
+        return this.formatResponse(dto,HttpStatus.OK)
+    }
+    public async updateNotice(req:Request):Promise<ResponseObject<NoticeDocument>>{
+        const { noticeId } = req.params
+        const payload = new JWTPayloadDTO((req as any).payload); //驗證token
+        const dto = await this.NoticeSvc.updateNotice(noticeId,payload._id)
         return this.formatResponse(dto,HttpStatus.OK)
     }
     // public async getConversation(req:Request):Promise<ResponseObject<ConversationDocument>>{

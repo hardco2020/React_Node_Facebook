@@ -24,6 +24,10 @@ export class NoticeRoute extends RouteBase{
         .get(
             this.responseHandler(this.controller.getNotice)
         )
+        this.router.route('/update/:noticeId')
+        .put(
+            this.responseHandler(this.controller.updateNotice)
+        )
     }
 
 

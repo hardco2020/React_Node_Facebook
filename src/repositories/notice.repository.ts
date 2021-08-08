@@ -8,24 +8,40 @@ export class NoticeRepository{
     //     })
     //     return messages
     // }
-    public async sendNotice(senderId:string,object:string,senderPic:string,senderUsername:string):Promise<NoticeDocument>{
+    public async sendNotice(senderId:string,object:string,senderPic:string,senderUsername:string,receiverId:string):Promise<NoticeDocument>{
+        //必須根據不同的object來設定receiver有哪些人
+        // 新增文章 則只要是好友都可以看到 (可以在前端傳進來)
+        // 傳送訊息 則要是被傳送訊息的人可以看到 (必須在前端傳進來)
+        // 好友邀請和接受好友 要是被送出邀請的人才可以看到 （在前端傳進來
+        // 留言 則是該文章作者和其他人能夠看到 (在前端傳進來
+        // receiver由前端傳進來？
         const newNotice = new NoticeModel({
             object: object,
-            read: false,
+            read: [],
             senderId : senderId,
             senderPic : senderPic,
-            senderUsername
+            senderUsername,
+            receiverId
         })
         const saveNotice = await newNotice.save();
         return saveNotice;
     }
     public async getNotice(id:string):Promise<NoticeDocument[]>{
         //先找使用者的friends/follower
-        const user:any = await LocalAuthModel.findById(id);
-        const friends = user.followings
-        console.log(friends)
-        const notices = await NoticeModel.find({ "senderId": { "$in": friends} })
+        //在receiver裡有自己才回傳
+        const notices = await NoticeModel.find({ "receiverId": id})
         return notices
         //尋找notice中 包含friends的內容
+    }
+    public async updateNotice(noticeId:string,readId:string):Promise<NoticeDocument|null>{
+        const notice = await NoticeModel.findByIdAndUpdate(noticeId,
+            { $push:{ read: readId} },
+            {
+                new: true,
+                runValidators: true,
+                useFindAndModify: false
+            }
+        )
+        return notice
     }
 }

@@ -9,7 +9,7 @@ const NoticeSchema = new  Schema(
             require
         },
         read:{
-            type:Boolean,
+            type:Array,
             require
         },
         senderId:{
@@ -23,6 +23,9 @@ const NoticeSchema = new  Schema(
         senderUsername:{
             type:String,
             require
+        },
+        receiverId:{
+            type:Array,
         }
     },
     { timestamps: true}
@@ -30,10 +33,11 @@ const NoticeSchema = new  Schema(
 
 export interface NoticeDocument extends CoreDocument{
     object:string,
-    read: Boolean,
+    read: string[],
     senderId:string,
     senderPic:string,
     senderUsername:string
+    receiverId:string
 }
 
 export const NoticeModel  = model<NoticeDocument>('Notice',NoticeSchema);
