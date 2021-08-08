@@ -54,7 +54,7 @@ export class UserService {
         const isFollow = await this.localAuthRepo.getUserbyId(payload._id);
         console.log(isFollow)
         if(!isFollow.followings.includes(id)){ //代表找不到此人
-            const error = new Error('您沒有追蹤此人！');
+            const error = new Error('您已經和此人是朋友');
             (error as any).status = HttpStatus.CONFLICT;
             console.log(error) //看看裡面的屬性
             throw error;
@@ -71,10 +71,54 @@ export class UserService {
         }
         return user;
     }
+    public async friendUser(id:string,friendId:string){
+        let user=""
+        const isFriend = await this.localAuthRepo.getUserbyId(id);
+        console.log(isFriend)
+        if(isFriend.friends.includes(friendId)){ //代表找不到此人
+            const error = new Error('您已經和此人是朋友！');
+            (error as any).status = HttpStatus.CONFLICT;
+            console.log(error) //看看裡面的屬性
+            throw error;
+        }
+        else if(id===friendId){
+            const error = new Error('自己不能和自己成為朋友！');
+            (error as any).status = HttpStatus.CONFLICT;
+            console.log(error) //看看裡面的屬性
+            throw error;
+        }else{
+            //做update
+            await this.localAuthRepo.friendUser(id,friendId);
+            user = "您已經成功和"+id+"成為朋友"
+        }
+        return user;
+    }
+    public async unfriendUser(id:string,friendId:string){
+        let user=""
+        const isFriend = await this.localAuthRepo.getUserbyId(id);
+        console.log(isFriend)
+        if(!isFriend.friends.includes(friendId)){ //代表找不到此人
+            const error = new Error('您和此人不是朋友！');
+            (error as any).status = HttpStatus.CONFLICT;
+            console.log(error) //看看裡面的屬性
+            throw error;
+        }
+        else if(id===friendId){
+            const error = new Error('自己不能和自己取消朋友！');
+            (error as any).status = HttpStatus.CONFLICT;
+            console.log(error) //看看裡面的屬性
+            throw error;
+        }else{
+            //做update
+            await this.localAuthRepo.unfriendUser(id,friendId);
+            user = "您已經成功和"+id+"取消朋友"
+        }
+        return user;
+    }
     public async getFriends(user_id:string){
         const user = await this.localAuthRepo.getUserbyId(user_id);
         const friends = await Promise.all(
-            user.followings.map((friendsId: string)=>{
+            user.friends.map((friendsId: string)=>{
                 return this.localAuthRepo.getUserbyId(friendsId)
             })
         )

@@ -102,6 +102,48 @@ export class LocalAuthRepository {
     //要做確認
     //1.自己不能追蹤自己 
     //2.這個追蹤的人不能已經被追蹤過
+    public async unfriendUser(id:string,friendId:string){
+        const user = await LocalAuthModel.findOneAndUpdate(
+            { _id: id},
+            { $pull:{friends:friendId} },
+            {
+              new: true,
+              runValidators: true,
+              useFindAndModify: false
+            }
+        );
+        const followUser = await LocalAuthModel.findOneAndUpdate(
+            { _id: friendId},
+            { $pull:{friends:id} },
+            {
+              new: true,
+              runValidators: true,
+              useFindAndModify: false
+            }
+        );
+        return user;
+    }
+    public async friendUser(id:string,friendId:string){
+        const user = await LocalAuthModel.findOneAndUpdate(
+            { _id: id},
+            { $push:{friends:friendId} },
+            {
+              new: true,
+              runValidators: true,
+              useFindAndModify: false
+            }
+        );
+        const followUser = await LocalAuthModel.findOneAndUpdate(
+            { _id: friendId},
+            { $push:{friends:id} },
+            {
+              new: true,
+              runValidators: true,
+              useFindAndModify: false
+            }
+        );
+        return user;
+    }
     public async followUser(userId:string,followId:string){
         const user = await LocalAuthModel.findOneAndUpdate(
             { _id: userId},

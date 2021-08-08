@@ -29,13 +29,21 @@ export class UserRoute extends RouteBase{
         // .get(
         //     this.responseHandler(this.controller.getUser)
         // )
-    
+// friend a User
+        this.router.route('/friend/:id')
+        .put(
+            this.responseHandler(this.controller.friendUser)
+        )
+// Unfriend a User
+        this.router.route('/unfriend/:id')
+        .put(
+            this.responseHandler(this.controller.unfriendUser)
+        )
 // follow a user
         this.router.route('/:id/follow')
         .put(
             this.responseHandler(this.controller.followUser)
         )
-    
 // unfollow a user 
         this.router.route('/:id/unfollow')
         .put(

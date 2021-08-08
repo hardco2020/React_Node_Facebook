@@ -64,6 +64,9 @@ const LocalAuthSchema = new Schema(
     relationship:{
       type:Number,
       enum:[1,2,3],
+    },
+    friends:{
+      type:Array
     }
   },
   {
@@ -87,6 +90,7 @@ export interface LocalAuthDocument extends CoreDocument {
   city:string;
   from:string;
   relationship:number;
+  friends:any[];
 }
 
 export const LocalAuthModel = model<LocalAuthDocument>('User', LocalAuthSchema);

@@ -48,6 +48,18 @@ export class UserController extends ControllerBase {
         const dto = await this.userSvc.unfollowUser(payload,id);
         return this.formatResponse(dto,HttpStatus.OK);
     }
+    public async friendUser(req:Request):Promise<ResponseObject<string>>{
+        const payload = new JWTPayloadDTO((req as any).payload); //驗證token
+        const {id} = req.params
+        const dto = await this.userSvc.friendUser(payload._id,id);
+        return this.formatResponse(dto,HttpStatus.OK);
+    }
+    public async unfriendUser(req:Request):Promise<ResponseObject<string>>{
+        const payload = new JWTPayloadDTO((req as any).payload); //驗證token
+        const {id} = req.params
+        const dto = await this.userSvc.unfriendUser(payload._id,id);
+        return this.formatResponse(dto,HttpStatus.OK);
+    }
     public async getFriends(req:Request){ 
         const id = req.params.id
         const dto = await this.userSvc.getFriends(id)
