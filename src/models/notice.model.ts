@@ -15,6 +15,10 @@ const NoticeSchema = new  Schema(
         senderId:{
             type:String,
             require
+        },
+        senderPic:{
+            type:String,
+            require
         }
     },
     { timestamps: true}

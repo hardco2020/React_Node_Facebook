@@ -5,8 +5,8 @@ import { HttpStatus } from '../../../types/response.type';
 
 export class NoticeService {
     private readonly ntRepo = new NoticeRepository();
-    public async sendNotice(senderId:string, object:string){
-        const newNotice = await this.ntRepo.sendNotice(senderId,object)
+    public async sendNotice(senderId:string, object:string,senderPic:string){
+        const newNotice = await this.ntRepo.sendNotice(senderId,object,senderPic)
         return newNotice;
     }
     public async getNotice(id:string){

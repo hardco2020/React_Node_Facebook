@@ -11,8 +11,8 @@ export class NoticeController extends ControllerBase {
     private readonly NoticeSvc = new NoticeService();
     
     public async sendNotice(req:Request):Promise<ResponseObject<NoticeDocument>>{
-        const { object,senderId } = req.body
-        const dto = await this.NoticeSvc.sendNotice(senderId,object)
+        const { object,senderId,senderPic } = req.body
+        const dto = await this.NoticeSvc.sendNotice(senderId,object,senderPic)
         return this.formatResponse(dto,HttpStatus.CREATED)
 
     }

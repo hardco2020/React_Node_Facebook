@@ -8,11 +8,12 @@ export class NoticeRepository{
     //     })
     //     return messages
     // }
-    public async sendNotice(senderId:string,object:string):Promise<NoticeDocument>{
+    public async sendNotice(senderId:string,object:string,senderPic:string):Promise<NoticeDocument>{
         const newNotice = new NoticeModel({
             object: object,
             read: false,
-            senderId : senderId
+            senderId : senderId,
+            senderPic : senderPic
         })
         const saveNotice = await newNotice.save();
         return saveNotice;
