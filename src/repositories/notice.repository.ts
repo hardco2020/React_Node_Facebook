@@ -35,7 +35,7 @@ export class NoticeRepository{
     }
     public async updateNotice(noticeId:string,readId:string):Promise<NoticeDocument|null>{
         const notice = await NoticeModel.findByIdAndUpdate(noticeId,
-            { $push:{ read: readId} },
+            { $addToSet :{ read: readId} },
             {
                 new: true,
                 runValidators: true,
