@@ -3,12 +3,8 @@ import { CoreDocument } from '../types/model.type';
 
 const PendingSchema = new  Schema(
     {
-        senderId:{
-            type:String,
-            require
-        },
-        receiverId:{
-            type:String,
+        members:{
+            type:Array,
             require
         },
         senderPending:{
@@ -24,8 +20,7 @@ const PendingSchema = new  Schema(
 );
 
 export interface PendingDocument extends CoreDocument{
-    senderId:string,
-    receiverId:string,
+    members: string[],
     senderPending:boolean,
     receiverPending:boolean
 }

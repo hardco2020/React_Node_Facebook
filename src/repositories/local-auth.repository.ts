@@ -147,8 +147,7 @@ export class LocalAuthRepository {
     public async createPending(senderId:string,receiverId:string){
         console.log(senderId,receiverId)
         const newPending = new PendingnModel({
-            senderId:senderId,
-            receiverId:receiverId,
+            members:[senderId,receiverId],
             senderPending:true,
             receiverPending:false
         }) 
@@ -158,7 +157,7 @@ export class LocalAuthRepository {
     public async updatePending(senderId:string,receiverId:string){
         // 此處的sender是欄位裡的receiver
         const pending = await PendingnModel.findOneAndUpdate(
-          { senderId: receiverId,receiverId:senderId},
+          { members: { $all:[senderId,receiverId]}},
           { receiverPending:true},
           {
             new: true,
@@ -170,13 +169,13 @@ export class LocalAuthRepository {
     }
     public async getPending(senderId:string,receiverId:string){
         const pending = await PendingnModel.findOne(
-            {senderId:senderId,receiverId:receiverId}
+            { members: { $all:[senderId,receiverId]}}
         );
         return pending
     }
     public async deletePending(senderId:string,receiverId:string){
         const pending = await PendingnModel.findOneAndDelete(
-            {senderId:senderId,receiverId:receiverId}
+            { members: { $all:[senderId,receiverId]}}
         );
         return pending
     }
