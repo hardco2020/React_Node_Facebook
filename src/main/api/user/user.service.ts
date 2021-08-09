@@ -54,7 +54,7 @@ export class UserService {
             throw error;
         }else{
             //做update
-            await this.localAuthRepo.unfriendUser(id,friendId);
+            await this.localAuthRepo.friendUser(id,friendId);
             user = "您已經成功和"+id+"成為朋友"
         }
         return user;
