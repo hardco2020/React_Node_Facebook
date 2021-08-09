@@ -9,8 +9,8 @@ export class NoticeService {
         const newNotice = await this.ntRepo.sendNotice(senderId,object,senderPic,senderUsername,receiverId)
         return newNotice;
     }
-    public async getNotice(id:string){
-        const notice = await this.ntRepo.getNotice(id)
+    public async getNotice(id:string,page:number){
+        const notice = await this.ntRepo.getNotice(id,page)
         return notice
     }
     public async updateNotice(noticeId:string,readId:string){

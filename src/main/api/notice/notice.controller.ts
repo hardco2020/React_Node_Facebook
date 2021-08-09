@@ -17,8 +17,8 @@ export class NoticeController extends ControllerBase {
 
     }
     public async getNotice(req:Request):Promise<ResponseObject<NoticeDocument[]>>{
-        const { id } = req.params
-        const dto = await this.NoticeSvc.getNotice(id)
+        const { id,page } = req.params
+        const dto = await this.NoticeSvc.getNotice(id,parseInt(page))
         return this.formatResponse(dto,HttpStatus.OK)
     }
     public async updateNotice(req:Request):Promise<ResponseObject<NoticeDocument>>{
