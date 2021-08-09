@@ -29,7 +29,7 @@ export class NoticeRepository{
     public async getNotice(id:string,page:number):Promise<NoticeDocument[]>{
         //先找使用者的friends/follower
         //在receiver裡有自己才回傳
-        const notices = await NoticeModel.find({ "receiverId": id}).sort([['createdAt', -1]]).limit(10).skip(page)
+        const notices = await NoticeModel.find({ "receiverId": id}).sort([['createdAt', -1]]).limit(10).skip(page*10)
         return notices
         //尋找notice中 包含friends的內容
     }
