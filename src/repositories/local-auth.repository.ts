@@ -174,6 +174,12 @@ export class LocalAuthRepository {
         );
         return pending
     }
+    public async deletePending(senderId:string,receiverId:string){
+        const pending = await PendingnModel.findOneAndDelete(
+            {senderId:senderId,receiverId:receiverId}
+        );
+        return pending
+    }
     public async searchUsers(key:string){
         const all = await LocalAuthModel.find({});
         console.log(all)

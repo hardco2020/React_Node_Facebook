@@ -57,4 +57,8 @@ export class NoticeRepository{
         const saveNotice = await newNotice.save();
         return saveNotice;
     }
+    public async deleteNotice(noticeId:string,readId:string):Promise<NoticeDocument|null>{
+        const notice = await NoticeModel.findByIdAndDelete(noticeId)
+        return notice
+    }
 }

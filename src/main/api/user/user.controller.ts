@@ -60,6 +60,12 @@ export class UserController extends ControllerBase {
         const dto = await this.userSvc.getPending(payload._id,receiverId);
         return this.formatResponse(dto,HttpStatus.OK);
     }
+    public async deletePending(req:Request):Promise<ResponseObject<PendingDocument>>{
+        const payload = new JWTPayloadDTO((req as any).payload); //驗證token
+        const { receiverId } = req.params
+        const dto = await this.userSvc.deletePending(payload._id,receiverId);
+        return this.formatResponse(dto,HttpStatus.OK);
+    }
     public async getFriends(req:Request){ 
         const id = req.params.id
         const dto = await this.userSvc.getFriends(id)

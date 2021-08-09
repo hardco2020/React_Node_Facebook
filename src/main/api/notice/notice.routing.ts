@@ -34,6 +34,11 @@ export class NoticeRoute extends RouteBase{
         .put(
             this.responseHandler(this.controller.updateNotice)
         )
+        //delete Notice 
+        this.router.route('/delete/:noticeId')
+        .delete(
+            this.responseHandler(this.controller.deleteNotice)
+        )
     }
 
 

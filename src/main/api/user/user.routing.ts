@@ -54,6 +54,11 @@ export class UserRoute extends RouteBase{
         .get(
             this.responseHandler(this.controller.getPending)
         )
+// delete Pending
+        this.router.route('/pending/:receiverId')
+        .delete(
+            this.responseHandler(this.controller.deletePending)
+        )
 // get friends 
         this. router.route('/friends/:id')
         .get(

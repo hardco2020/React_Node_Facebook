@@ -33,6 +33,12 @@ export class NoticeController extends ControllerBase {
         return this.formatResponse(dto,HttpStatus.CREATED)
 
     }
+    public async deleteNotice(req:Request):Promise<ResponseObject<NoticeDocument>>{
+        const { noticeId } = req.params
+        const payload = new JWTPayloadDTO((req as any).payload); //驗證token
+        const dto = await this.NoticeSvc.deleteNotice(noticeId,payload._id)
+        return this.formatResponse(dto,HttpStatus.OK)
+    }
     // public async getConversation(req:Request):Promise<ResponseObject<ConversationDocument>>{
     //     const { userId } = req.params
     //     const dto = await this.conversationSvc.getConversation(userId)

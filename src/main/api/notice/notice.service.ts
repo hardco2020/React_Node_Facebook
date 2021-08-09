@@ -21,5 +21,9 @@ export class NoticeService {
         const newNotice = await this.ntRepo.sendNoticePost(senderId,object,senderPic,senderUsername,receiverId,postId)
         return newNotice;
     }
+    public async deleteNotice(noticeId:string,readId:string){
+        const notice = await this.ntRepo.deleteNotice(noticeId,readId)
+        return notice
+    }
 }
    

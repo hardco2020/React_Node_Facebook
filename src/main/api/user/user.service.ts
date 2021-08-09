@@ -33,6 +33,10 @@ export class UserService {
         const pending = await this.localAuthRepo.getPending(senderId,receiverId)
         return pending;
     }
+    public async deletePending(senderId:string,receiverId:string){
+        const pending = await this.localAuthRepo.deletePending(senderId,receiverId)
+        return pending;
+    }
     public async friendUser(id:string,friendId:string){
         let user=""
         const isFriend = await this.localAuthRepo.getUserbyId(id);
