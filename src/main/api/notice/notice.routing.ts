@@ -20,7 +20,7 @@ export class NoticeRoute extends RouteBase{
             this.responseHandler(this.controller.sendNotice)
         )
         //get Notice
-        this.router.route('/:id')
+        this.router.route('/:id/:page')
         .get(
             this.responseHandler(this.controller.getNotice)
         )
