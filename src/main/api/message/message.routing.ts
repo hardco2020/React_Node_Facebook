@@ -20,7 +20,7 @@ export class MessageRoute extends RouteBase{
             express.json(),
             this.responseHandler(this.controller.sendMessage)
         )
-        this.router.route('/:cvsId')
+        this.router.route('/:cvsId/:page')
         .get(
             this.responseHandler(this.controller.getMessage)
         )

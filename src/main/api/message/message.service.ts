@@ -11,8 +11,8 @@ export class MessageService {
         const newMessage = await this.msRepo.sendMessage(message)
         return newMessage
     }
-    public async getMessage(conversationId:string){
-        const messages = await this.msRepo.getMessage(conversationId)
+    public async getMessage(conversationId:string,page:number){
+        const messages = await this.msRepo.getMessage(conversationId,page)
         return messages
     }
 

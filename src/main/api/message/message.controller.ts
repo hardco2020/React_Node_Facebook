@@ -15,8 +15,8 @@ export class MessageController extends ControllerBase {
         return this.formatResponse(dto,HttpStatus.CREATED)
     }
     public async getMessage(req:Request):Promise<ResponseObject<MessageDocument[]>>{
-        const { cvsId } = req.params
-        const dto = await this.messageSvc.getMessage(cvsId)
+        const { cvsId,page } = req.params
+        const dto = await this.messageSvc.getMessage(cvsId,parseInt(page))
         return this.formatResponse(dto,HttpStatus.OK)
     }
     

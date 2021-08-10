@@ -6,10 +6,10 @@ export class MessageRepository{
         const savedMessage = await newMessage.save();
         return savedMessage
     }
-    public async getMessage(conversationId:string):Promise<MessageDocument[]>{
+    public async getMessage(conversationId:string,page:number):Promise<MessageDocument[]>{
         const messages = await MessageModel.find({
             conversationId: conversationId
-        })
+        }).limit(20).skip(page*20)
         return messages
     }
 }
