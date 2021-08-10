@@ -18,7 +18,7 @@ export class LocalAuthService {
         //return token
         const expiry = new Date();
         console.log(process.env.JWT_SIGN)
-        expiry.setDate(expiry.getDate() + 7);
+        expiry.setDate(expiry.getDate() + 30);
         return JWT.sign(
             {    
           _id: user._id,
