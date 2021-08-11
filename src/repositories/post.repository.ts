@@ -77,7 +77,7 @@ export class PostRepository{
         //兩個應該要合在一起找 這樣才能一次回傳十筆？
         const userPosts = await PostModel.find({userId:user_id});
         //利用解構寫法 一次回傳十筆？
-        const friendPosts = await PostModel.find({userId:{$in: [user_id,...currentUser.followings]}}).sort([['createdAt', -1]]).limit(15).skip(page*15)
+        const friendPosts = await PostModel.find({userId:{$in: [user_id,...currentUser.friends]}}).sort([['createdAt', -1]]).limit(15).skip(page*15)
         //根據query回傳前十筆？
         return friendPosts;
     }
